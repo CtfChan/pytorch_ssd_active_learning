@@ -25,12 +25,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Learning parameters
 # checkpoint = None
-# checkpoint = './checkpoint_ssd300.pth.tar'
-checkpoint = './SSD_40_epochs_dropout_0.1.pth.tar'
+checkpoint = './checkpoint_ssd300.pth.tar'
+# checkpoint = './SSD_40_epochs_dropout_0.1.pth.tar'
 batch_size = 8  # batch size
 epochs = 27  # number of epochs for each acquisition iteration
 workers = 4 # number of workers for loading data in the DataLoader
-# lr = 1e-3  # learning rate
 momentum = 0.9  # momentum
 weight_decay = 5e-4  # weight decay
 grad_clip = None  # clip if gradients are exploding, which may happen at larger batch sizes (sometimes at 32) - you will recognize it by a sorting error in the MuliBox loss calculation
@@ -39,18 +38,14 @@ grad_clip = None  # clip if gradients are exploding, which may happen at larger 
 cudnn.benchmark = True
 
 
-
 # active learning params
 init_train_size = 500
 print_freq = np.floor(init_train_size/batch_size) # print training or validation status every __ batches
 acquisition_iterations = 14
 num_of_queries = 250
 pool_subset = 500
-# num_of_queries = 3
-# pool_subset = 10
 assert(pool_subset > num_of_queries)
 save_al_checkpoints = False
-reset_weights_after_acquisition = False
 
 
 # eval params
@@ -73,6 +68,8 @@ def main():
                         help='learning rate (default: 1e-3)')
     parser.add_argument('--save_dir', type=str, default='./results/', metavar='N',
                          help='directory to save to  (default: ./result/)')
+    parser.add_argument('--reset_weight',type=bool, default=False, metavar='N',
+                        help='reset network weights (default: False')
     args = parser.parse_args()
 
     print("Training with the following acquisition function: ", args.acquisition_function)
@@ -174,7 +171,7 @@ def main():
 
        
         # reset weights before training
-        if reset_weights_after_acquisition:
+        if args.reset_weight:
             # checkpoint = torch.load(checkpoint)
             print("Loading checkpoint model.")
             model = checkpoint['model']
@@ -194,7 +191,7 @@ def main():
 
 
 
-        # Train on new data for certain number of iterations rather than epochs
+        # We can train on new data for certain number of iterations rather than epochs
         # XXXX iterations
         # epochs = int(80000 / len(train_dataset.indices))
         # print("training_data len: ", len(train_dataset.indices))
