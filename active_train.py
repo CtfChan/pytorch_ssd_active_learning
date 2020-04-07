@@ -116,7 +116,7 @@ def main():
 
     
     train_indices = all_train_indices[:init_train_size]
-    pool_indices = all_train_indices[init_train_size:4952] #ONLY VOC 2007, remove 4952 to use all data
+    pool_indices = all_train_indices[init_train_size:5011] #ONLY VOC 2007, remove 5011 to use all data
     
     with open(os.path.join(data_folder, 'TEST_images.json'), 'r') as j:
         test_images = json.load(j)
