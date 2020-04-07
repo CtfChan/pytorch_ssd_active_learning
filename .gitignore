@@ -1,0 +1,13 @@
+*.tar
+__pycache__
+*.vscode
+*.npy
+/results/*
+*.npz
+voc/VOCdevkit/*
+voc/*.tar
+voc/TEST*
+voc/TRAIN*
+.ipynb_checkpoints
+.ipynb_checkpoints/*
+

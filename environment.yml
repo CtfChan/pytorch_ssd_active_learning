@@ -1,0 +1,26 @@
+name: tf_gpu
+channels:
+  - defaults
+dependencies:
+  - tensorflow-gpu
+  - opencv
+  - pillow
+  - lxml
+  - jupyter
+  - matplotlib
+  - pandas
+  - pylint
+  - libwebp
+  - scikit-learn
+  - cudatoolkit=10.0
+  - torchvision
+  - pytorch
+  - tensorflow-datasets
+  - easydict
+  - terminaltables
+  - visdom
+  - scikit-image
+  - keras
+  - progressbar2
+prefix: /home/christopherchan/anaconda3/envs/tf_gpu
+
